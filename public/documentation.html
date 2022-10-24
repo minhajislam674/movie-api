@@ -12,7 +12,7 @@
     <header> </header>
 
     <main>
-        <h1>myFlix API</h1>
+        <h1>myFlix Movie API Documentation</h1>
 
         <h2> Brief Info </h2>
         <p>
@@ -20,11 +20,91 @@
             movies, directors, and genres. Users will be able to sign up, update their
             personal information, and create a list of their favorite movies.
         </p>
-        <h2> Key Features </h2>
 
-        <p>
+        <table>
+            <thead>
+                <th>Endpoint description</th>
+                <th>Method type</th>
+                <th>Endpoint URL</th>
+                <th>Request body data format</th>
+                <th>Response body data format</th>
+            </thead>
+            <tbody>
+                <tr>
+                  <td>Return a list of ALL movies to the user</td>
+                  <td>GET</td>
+                  <td>/movies</td>
+                  <td>-</td>
+                  <td>A JSON object holding data about all the movies</td>
+                </tr>
 
-        </p>
+                <tr>
+                    <td>Return a single movie by title to the user</td>
+                    <td>GET</td>
+                    <td>/movies/:title</td>
+                    <td>-</td>
+                    <td>A JSON object holding data about a single movie containing title,description, genre, director</td>
+                </tr>
+
+                
+                <tr>
+                    <td>Return data about movie genre</td>
+                    <td>GET</td>
+                    <td>/movies/genre/:genreName</td>
+                    <td>-</td>
+                    <td>A JSON object containing genre name and description</td>
+                </tr>
+
+                <tr>
+                    <td>Return data about a director by name</td>
+                    <td>GET</td>
+                    <td>/movies/director/:directorName</td>
+                    <td>-</td>
+                    <td>A JSON object containing name, bio and birth year of the director</td>
+                </tr>
+
+                <tr>
+                    <td>Add new user/Allow new users to register</td>
+                    <td>POST</td>
+                    <td>/users</td>
+                    <td>A JSON object holding data about the user to add</td>
+                    <td>A JSON object holding data about the added user including an unique id</td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to update their user info (username)</td>
+                    <td>PUT</td>
+                    <td>/users/:id</td>
+                    <td>A JSON object containing the updated name</td>
+                    <td>A JSON object with the new info, others remain unchanged</td>
+                </tr>
+
+                <tr>
+                    <td>Allow users to add a movie to their list of favorites</td>
+                    <td>POST</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>-</td>
+                    <td>A text message indiciating favorite movie was succesfully added/td>
+                </tr>
+
+                
+                <tr>
+                    <td>Allow users to delete a movie from their list of favorites</td>
+                    <td>DELETE</td>
+                    <td>/users/:id/:movieTitle</td>
+                    <td>-</td>
+                    <td>A text message indiciating favorite movie was succesfully removed/td>
+                </tr>
+
+                <tr>
+                    <td>Allow existing users to deregister</td>
+                    <td>DELETE</td>
+                    <td>/users/:id</td>
+                    <td>-</td>
+                    <td>A text message indiciating user info was removed/td>
+                </tr>
+
+        </table>
 
     </main>
 

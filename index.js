@@ -4,9 +4,12 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid');
 
 const app = express();
+
 app.use(bodyParser.json());
 
-app.use(morgan('common'));
+app.use(morgan('common')); // Using Morgan’s “common” format. It logs basic data such as IP address, the time of the request etc.
+
+app.use(express.static('public')) // Routes all requests for static files to their corresponding files within the “public” folder in the server
 
 let users = [
     {
@@ -171,6 +174,14 @@ app.get('/movies/director/:directorName', (req, res) => {
     }
 })
 
+
+
+// Error-handling middleware function
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong!');
+});
 
 // Listens for requests
 

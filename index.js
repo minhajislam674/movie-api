@@ -1,3 +1,12 @@
+const mongoose = require('mongoose'); //Integrating Mongoose into this REST API wgich will allow to perform CRUD operations on our MongoDB data
+const Models = require('./models.js');
+
+const Movies = Models.Movie;
+const Users = Models.User;
+
+//Connect to MongoDB database
+mongoose.connect('mongodb://localhost:27017/myFlixDB', {useNewUrlParser: true, useUnifiedTopology: true});
+
 const express = require('express');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');

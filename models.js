@@ -27,8 +27,8 @@ let userSchema = mongoose.Schema({
 });
 
 //Creation of models that use the schemas we’ve defined. 
-let Movie = mongoose.Model('Movie', movieSchema);
-let User = mongoose.Model('user', userSchema);
+let Movie = mongoose.model('Movie', movieSchema);
+let User = mongoose.model('user', userSchema);
 
 
 // Exporting the models in order to then import them into your “index.js” file

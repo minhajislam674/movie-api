@@ -21,10 +21,23 @@
             personal information, and create a list of their favorite movies.
         </p>
 
+        <h2> Key Features</h2>
+        <ol>
+            <li> Return a list of ALL movies to the user</li>
+            <li>Return data (description, genre, director, image URL, whether it is featured or not) about a single movie by title to the user </li>
+            <li>Return data about a genre (description) by name/title (e.g., “Thriller”) </li>
+            <li> Return data about a director (bio, birth year, death year) by name</li>
+            <li> Allow new users to register</li>
+            <li>Allow users to update their user info (username, password, email, date of birth) </li>
+            <li> Allow users to add a movie to their list of favorites</li>
+            <li> Allow users to remove a movie from their list of favorites</li>
+            <li> Allow existing users to deregister</li>
+        </ol>
+
         <table>
             <thead>
-                <th>Endpoint description</th>
-                <th>Method type</th>
+                <th>Business Logic</th>
+                <th>HTTP Method type</th>
                 <th>Endpoint URL</th>
                 <th>Request body data format</th>
                 <th>Response body data format</th>
@@ -41,7 +54,7 @@
                 <tr>
                     <td>Return a single movie by title to the user</td>
                     <td>GET</td>
-                    <td>/movies/:title</td>
+                    <td>/movies/:Title</td>
                     <td>-</td>
                     <td>A JSON object holding data about a single movie containing title,description, genre, director</td>
                 </tr>
@@ -50,7 +63,7 @@
                 <tr>
                     <td>Return data about movie genre</td>
                     <td>GET</td>
-                    <td>/movies/genre/:genreName</td>
+                    <td>/movies/genres/:Name </td>
                     <td>-</td>
                     <td>A JSON object containing genre name and description</td>
                 </tr>
@@ -58,7 +71,7 @@
                 <tr>
                     <td>Return data about a director by name</td>
                     <td>GET</td>
-                    <td>/movies/director/:directorName</td>
+                    <td>/movies/directors/:Name </td>
                     <td>-</td>
                     <td>A JSON object containing name, bio and birth year of the director</td>
                 </tr>
@@ -74,7 +87,7 @@
                 <tr>
                     <td>Allow users to update their user info (username)</td>
                     <td>PUT</td>
-                    <td>/users/:id</td>
+                    <td>/users/:Username</td>
                     <td>A JSON object containing the updated name</td>
                     <td>A JSON object with the new info, others remain unchanged</td>
                 </tr>
@@ -82,26 +95,26 @@
                 <tr>
                     <td>Allow users to add a movie to their list of favorites</td>
                     <td>POST</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>/users/:Username/movies/:MovieID </td>
                     <td>-</td>
-                    <td>A text message indiciating favorite movie was succesfully added/td>
+                    <td>A JSON object with the new user info which also includes "FavoriteMovies": ["635932bafb472953a30232d1"] </td>
                 </tr>
 
                 
                 <tr>
                     <td>Allow users to delete a movie from their list of favorites</td>
                     <td>DELETE</td>
-                    <td>/users/:id/:movieTitle</td>
+                    <td>/users/:Username/movies/:MovieID </td>
                     <td>-</td>
-                    <td>A text message indiciating favorite movie was succesfully removed/td>
+                    <td>A JSON object with the new user info. After deletion, it will look like this. "FavoriteMovies": [""]</td>
                 </tr>
 
                 <tr>
                     <td>Allow existing users to deregister</td>
                     <td>DELETE</td>
-                    <td>/users/:id</td>
+                    <td>/users/:Username </td>
                     <td>-</td>
-                    <td>A text message indiciating user info was removed/td>
+                    <td>A text message indiciating user info was removed </td>
                 </tr>
 
         </table>

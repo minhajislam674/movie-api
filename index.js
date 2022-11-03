@@ -18,6 +18,20 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const cors = require('cors');
+let allowedOrigins = ['http://localhost:8080', 'http://testsite.com']; // Set the application to allow requests from these origins
+app.use(cors({
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true);
+        if(allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
+            let message = 'The CORS policiy for this app does not allow access from origin ' + origin;
+            return callback(new Error(message), false);
+        }
+        return callback(null, true);
+    }
+}));
+
 let auth = require('./auth')(app); //import our “auth.js” file into the project. 'app' argument ensures that Express is available in our “auth.js” file as well.
 const passport = require('passport'); //require the Passport module
 require('./passport'); //import our “passport.js” file into the project.
@@ -28,14 +42,15 @@ app.use(express.static('public')) // Routes all requests for static files to the
 
 // CREATE -- Add new user
 app.post('/users', (req, res) => {
-    Users.findOne({Username: req.body.Username})
+    let hashedPassowrd = Users.hashPassword(req.body.Password); //Hash any password entered by the user when registering before storing it in the MongoDB database
+    Users.findOne({Username: req.body.Username}) //Search to see if a user with the requested username already exists
     .then((user)=> { 
-        if (user) { //If the given username does exist, send back the appropriate response to the client 
+        if (user) { //If the user is found, send a response that it already exists
             return res.status(400).send(req.body.Username + 'already exists'); 
         } else { //If the user doesn’t exist, you use Mongoose’s create command to “CREATE” the new user
             Users.create({
                 Username: req.body.Username,  //req.body is the request that the user sends.
-                Password: req.body.Password,
+                Password: hashedPassowrd,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             })

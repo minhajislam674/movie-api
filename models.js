@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 //A  schema has been defined for documents in the “Movies” collection
 let movieSchema = mongoose.Schema({     
@@ -25,6 +26,14 @@ let userSchema = mongoose.Schema({
     Birthday: Date,
     FavoriteMovies: [{type: mongoose.Schema.Types.ObjectId, ref:'Movie'}]
 });
+
+userSchema.statics.hashPassword = (password) => {
+    return bcrypt.hashSync(password, 10);
+};
+
+userSchema.methods.validatePassword = function(passowrd) {
+    return bcrypt.compareSync(password, this.Password);
+};
 
 //Creation of models that use the schemas we’ve defined. 
 let Movie = mongoose.model('Movie', movieSchema);

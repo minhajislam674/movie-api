@@ -7,6 +7,8 @@ let Users = Models.User,
     JWTStrategy = passportJWT.Strategy,
     ExtractJWT = passportJWT.ExtractJwt;
 
+
+//Setting up the LocalStrategy
 passport.use(new LocalStrategy ({ //LocalStrategy takes a username and password from the request body
     usernameField: 'Username',
     passwordField: 'Password'
@@ -17,8 +19,17 @@ passport.use(new LocalStrategy ({ //LocalStrategy takes a username and password 
     .then((user) => {
         if (!user) {
             console.log('incorrect username');
-            return callback(null, false, {message: 'Incorrect username or passowrd.'});
+            return callback(null, false, {message: 'Incorrect username.'});
         }
+
+        //Hash any password entered by the user when logging in before comparing it to the password stored in MongoDB 
+        //(user.validatePassword(password)) in LocalStrategy within your “passport.js” file).
+
+        if (!user.validatePassword(password)) {
+            console.log('incorrect password');
+            return callback(null, false, {message: 'Incorrect passowrd.'});
+        } 
+
         console.log('finished');
         return callback(null, user, {message: 'Logged In Successfully'});
     })

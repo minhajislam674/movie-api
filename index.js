@@ -14,6 +14,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const uuid = require('uuid');
 
+const {check, validationResult} = require('express-validator'); //This express-validator library offers a variety of validation methods
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -41,7 +43,24 @@ app.use(morgan('common')); // Using Morgan’s “common” format. It logs basi
 app.use(express.static('public')) // Routes all requests for static files to their corresponding files within the “public” folder in the server
 
 // CREATE -- Add new user
-app.post('/users', (req, res) => {
+app.post(
+    '/users',
+    //Here include validator as middleware to the routes that require validation. It takes the following format:
+    //check([field in req.body to validate], [error message if validation fails]).[validation method]();
+    [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email is not valid').isEmail()
+    ], 
+    (req, res) => {
+        // check the validation object for errors
+        let errors = validationResult(req); ////Puts any errors that occurred into a new variabl
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()}); //Error sent back to the user in a JSON object as an HTTP response. If an error occurs here, the rest of the code will not execute.
+        }
+
     let hashedPassowrd = Users.hashPassword(req.body.Password); //Hash any password entered by the user when registering before storing it in the MongoDB database
     Users.findOne({Username: req.body.Username}) //Search to see if a user with the requested username already exists
     .then((user)=> { 
@@ -69,12 +88,30 @@ app.post('/users', (req, res) => {
 
 
 // UPDATE -- Change a user's info, by username
-app.put('/users/:Username', passport.authenticate('jwt', { session: false }), (req, res) => {
+app.put(
+    '/users/:Username', 
+    passport.authenticate('jwt', { session: false }),
+
+    [
+        check('Username', 'Username is required').isLength({min: 5}),
+        check('Username', 'Username contains non alphanumeric characters - not allowed').isAlphanumeric(),
+        check('Password', 'Password is required').not().isEmpty(),
+        check('Email', 'Email is not valid').isEmail()
+    ],
+    (req, res) => {
+        // check the validation object for errors
+        let errors = validationResult(req); ////Puts any errors that occurred into a new variable
+
+        if (!errors.isEmpty()) {
+            return res.status(422).json({errors: errors.array()}); //Error sent back to the user in a JSON object as an HTTP response. If an error occurs here, the rest of the code will not execute.
+        }
+    
+    let hashedPassword = Users.hashPassword(req.body.Password);
     Users.findOneAndUpdate({ Username: req.params.Username},
         {$set:
             {
                 Username: req.body.Username,
-                Password: req.body.Password,
+                Password: hashedPassowrd,
                 Email: req.body.Email,
                 Birthday: req.body.Birthday
             }}, 
@@ -222,8 +259,10 @@ app.use((err, req, res, next) => {
 });
 
 // Listens for requests
+const port = process.env.PORT || 8080;
+//process.env.PORT looks for a pre-configured port number in the environment variable, and, if nothing is found, sets the port to a certain port number.
 
-app.listen(8080, () => {
-    console.log('Your app is listening on port 8080.'); //a logic here to send a response
+app.listen(port, '0.0.0.0', () => {
+    console.log('Listening on port ' + port); 
 });
 

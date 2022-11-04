@@ -45,6 +45,12 @@ app.use(morgan('common')); // Using Morgan’s “common” format. It logs basi
 
 app.use(express.static('public')) // Routes all requests for static files to their corresponding files within the “public” folder in the server
 
+
+app.get('/', (req, res) => {
+    res.send('Welcome to MyFlix!');
+});
+
+
 // CREATE -- Add new user
 app.post(
     '/users',

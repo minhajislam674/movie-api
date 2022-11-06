@@ -26,6 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
 let allowedOrigins = ['http://localhost:8080', 'http://testsite.com']; // Set the application to allow requests from these origins
+
 app.use(cors({
     origin: (origin, callback) => {
         if (!origin) return callback(null, true);
@@ -274,4 +275,7 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on port ' + port); 
 });
+
+
+
 

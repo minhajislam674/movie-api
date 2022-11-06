@@ -43,12 +43,11 @@ passport.use(new LocalStrategy ({ //LocalStrategy takes a username and password 
 passport.use(new JWTStrategy ({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(), //JWT is extracted from the header of the HTTP request. This JWT is called the “bearer token”.
     secretOrKey: 'your_jwt_secret' //Use of a “secret” key to verify the signature of the JWT.
-}, (jwtPayload, callback) => {
-    return Users.findById(jwtPayload._id)
-    .then((user) => {
+}, async (jwtPayload, callback) => {
+    try {
+        const user = await Users.findById(jwtPayload._id);
         return callback(null, user);
-    })
-    .catch((error) => {
+    } catch (error) {
         return callback(error);
-    });
+    }
 }));

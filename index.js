@@ -127,7 +127,7 @@ app.put(
             }}, 
         { new: true})
         .then ((updatedUser) => {
-            res.json(updatedUser)
+            res.status(201).json(updatedUser)
         })
         .catch ((err) => {
             console.error(err);
@@ -143,7 +143,7 @@ app.post('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { sess
    },
    { new: true }) // This line makes sure that the updated document is returned
     .then ((updatedUser) => {
-        res.json(updatedUser)
+        res.status(201).json(updatedUser)
     })
     .catch ((err) => {
         console.error(err);
@@ -158,7 +158,7 @@ app.delete('/users/:Username/movies/:MovieID', passport.authenticate('jwt', { se
      },
      { new: true }) // This line makes sure that the updated document is returned
       .then ((updatedUser) => {
-          res.json(updatedUser)
+          res.status(201).json(updatedUser)
       })
       .catch ((err) => {
           console.error(err);
@@ -186,7 +186,7 @@ app.delete('/users/:Username', passport.authenticate('jwt', { session: false }),
 app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) => {
     Users.find()
     .then((users) => {
-        res.status(201).json(users);
+        res.status(200).json(users);
     })
     .catch((error) => {
         console.error(error);
@@ -202,7 +202,7 @@ app.get('/users', passport.authenticate('jwt', { session: false }), (req, res) =
 app.get('/movies', passport.authenticate('jwt', { session: false }), (req, res) => {
     Movies.find()
     .then((movies) => {
-        res.status(201).json(movies);
+        res.status(200).json(movies);
     })
     .catch((error) => {
         console.error(error);
@@ -216,7 +216,7 @@ app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), (req
     .then((movie) => {
 
         if(movie) {
-            res.json(movie)
+            res.status(200).json(movie)
             .catch((err) => {
                 console.error(err);
                 res.status(500).send('Error: ' + err);

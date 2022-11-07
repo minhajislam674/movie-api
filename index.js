@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'http://testsite.com']; // Set the application to allow requests from these origins
+let allowedOrigins = ['http://localhost:8080', 'https://api-thisismyflix.herokuapp.com/', 'http://testsite.com']; // Set the application to allow requests from these origins
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -271,7 +271,6 @@ app.use((err, req, res, next) => {
 // Listens for requests
 const port = process.env.PORT || 8080;
 //process.env.PORT looks for a pre-configured port number in the environment variable, and, if nothing is found, sets the port to a certain port number.
-
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on port ' + port); 
 });

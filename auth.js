@@ -20,8 +20,8 @@ module.exports = (router) => {
     router.post('/login', (req, res) => {
         passport.authenticate('local', { session: false}, (error, user, info) => { //local specifies the local strategy we defined to check that the username and password in the body of the request exist in the database.
             if (error || !user) {
-                return res.status(400).json({ //If the username and password don’t exist, you return the error message 
-                    message: 'Something is not right',  
+                return res.status(404).json({ //If the username and password don’t exist, you return the error message 
+                    message: 'Invalid username or password',  
                     user: user
                 });
             }

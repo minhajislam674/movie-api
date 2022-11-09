@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'https://api-thisismyflix.herokuapp.com/', 'http://testsite.com']; // Set the application to allow requests from these origins
+let allowedOrigins = ['http://localhost:8080', 'https://api-thisismyflix.herokuapp.com/', 'http://testsite.com', 'https://editor.swagger.io/']; // Set the application to allow requests from these origins
 
 app.use(cors({
     origin: (origin, callback) => {

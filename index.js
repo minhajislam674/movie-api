@@ -25,18 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const cors = require('cors');
-let allowedOrigins = ['http://localhost:8080', 'https://editor.swagger.io/', 'https://editor.next.swagger.io/']; // Set the application to allow requests from these origins
-
-app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) return callback(null, true);
-        if(allowedOrigins.indexOf(origin) === -1) { // If a specific origin isn’t found on the list of allowed origins
-            let message = 'The CORS policiy for this app does not allow access from origin ' + origin;
-            return callback(new Error(message), false);
-        }
-        return callback(null, true);
-    }
-}));
+app.use(cors());
 
 let auth = require('./auth')(app); //import our “auth.js” file into the project. 'app' argument ensures that Express is available in our “auth.js” file as well.
 const passport = require('passport'); //require the Passport module

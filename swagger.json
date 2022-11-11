@@ -1,0 +1,1089 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+      "title": "myFlix API",
+      "description": "This web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "https://api-thisismyflix.herokuapp.com/"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Homepage",
+        "description": "Welcome page"
+      },
+      {
+        "name": "Users",
+        "description": "Everything about users"
+      },
+      {
+        "name": "Movies",
+        "description": "Everything about movies"
+      }
+    ],
+    "paths": {
+      "/": {
+        "get": {
+          "tags": [
+            "Homepage"
+          ],
+          "summary": "Get Homepage",
+          "description": "This endpoint uses a GET request to retrive the homepage.",
+          "responses": {
+            "200": {
+              "description": "A successful response"
+            }
+          }
+        }
+      },
+      "/users": {
+        "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get a list of all users",
+          "description": "This endpoint uses a GET request to retrive all users.",
+          "responses": {
+            "200": {
+              "description": "Succesful pull of all users",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "id": "636b8c7fde57b3d74970ad03",
+                      "Username": "John01",
+                      "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+                      "Email": "john@gmail.com",
+                      "Birthday": "01/05/1992",
+                      "FavoriteMovies": []
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Username": {
+                          "type": "string"
+                        },
+                        "Passoword": {
+                          "type": "string"
+                        },
+                        "Email": {
+                          "type": "string"
+                        },
+                        "Birthday": {
+                          "type": "string"
+                        },
+                        "FavoriteMovies": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error",
+              "content": {}
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        },
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Allow user to register",
+          "description": "This endpoint uses a POST request to add a new user.",
+          "requestBody": {
+            "description": "User info that needs to be added to register as a new user",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Username": {
+                      "type": "string",
+                      "example": "John01"
+                    },
+                    "Password": {
+                      "type": "string",
+                      "example": "00abcd"
+                    },
+                    "Email": {
+                      "type": "string",
+                      "example": "john12@gmail.com"
+                    },
+                    "Birthday": {
+                      "type": "string",
+                      "example": "01/05/1992"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "User created successfuly",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "id": "636b8c7fde57b3d74970ad03",
+                      "Username": "John01",
+                      "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+                      "Email": "john@gmail.com",
+                      "Birthday": "01/05/1992",
+                      "FavoriteMovies": []
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Username": {
+                          "type": "string"
+                        },
+                        "Passoword": {
+                          "type": "string"
+                        },
+                        "Email": {
+                          "type": "string"
+                        },
+                        "Birthday": {
+                          "type": "string"
+                        },
+                        "FavoriteMovies": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "User already exists",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/login": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Allow user to log in",
+          "description": "This endpoint uses a POST request to log in users",
+          "parameters": [
+            {
+              "name": "Username",
+              "in": "query",
+              "description": "The user name for login",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "Password",
+              "in": "query",
+              "description": "The password for login",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Login successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "id": "636b8c7fde57b3d74970ad03",
+                      "Username": "John01",
+                      "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+                      "Email": "john@gmail.com",
+                      "Birthday": "01/05/1992",
+                      "FavoriteMovies": []
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Username": {
+                          "type": "string"
+                        },
+                        "Passoword": {
+                          "type": "string"
+                        },
+                        "Email": {
+                          "type": "string"
+                        },
+                        "Birthday": {
+                          "type": "string"
+                        },
+                        "FavoriteMovies": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Invalid username or password",
+              "content": {}
+            }
+          }
+        }
+      },
+      "/users/{Username}": {
+        "put": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Change a user's info by username",
+          "description": "This endpoint uses a PUT request to update user information.",
+          "parameters": [
+            {
+              "name": "Username",
+              "in": "path",
+              "description": "Username that need to be updated",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "Updated user object",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Email": {
+                      "type": "string",
+                      "example": "john@gmail.com"
+                    }
+                  }
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "201": {
+              "description": "Update successful",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "id": "636b8c7fde57b3d74970ad03",
+                      "Username": "John01",
+                      "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+                      "Email": "john@gmail.com",
+                      "Birthday": "01/05/1992",
+                      "FavoriteMovies": []
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Username": {
+                          "type": "string"
+                        },
+                        "Passoword": {
+                          "type": "string"
+                        },
+                        "Email": {
+                          "type": "string"
+                        },
+                        "Birthday": {
+                          "type": "string"
+                        },
+                        "FavoriteMovies": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "404": {
+              "description": "Invalid username",
+              "content": {}
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Allow user to deregister",
+          "description": "This endpoint uses a DELETE request to delete an user.",
+          "parameters": [
+            {
+              "name": "Username",
+              "in": "path",
+              "description": "Username that need to be deleted",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User was deleted"
+            },
+            "400": {
+              "description": "User could not be found"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      },
+      "/users/{Username}/movies/{MovieID}": {
+        "post": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Allow users to add a movie to to their list of favorites",
+          "description": "This endpoint makes a POST request to add a movie to list of favorites.",
+          "parameters": [
+            {
+              "name": "Username",
+              "in": "path",
+              "description": "The username for which the movie needs to be added to list of favorites",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "MovieID",
+              "in": "path",
+              "description": "The id of the movie that needs to be added to list of favorites",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Movie added successfuly",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "example": [
+                      {
+                        "id": "636b8c7fde57b3d74970ad03",
+                        "Username": "John01",
+                        "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+                        "Email": "john@gmail.com",
+                        "Birthday": "01/05/1992",
+                        "FavoriteMovies": [
+                          "635932bcfb472953a30232d8"
+                        ]
+                      }
+                    ],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Username": {
+                          "type": "string"
+                        },
+                        "Passoword": {
+                          "type": "string"
+                        },
+                        "Email": {
+                          "type": "string"
+                        },
+                        "Birthday": {
+                          "type": "string"
+                        },
+                        "FavoriteMovies": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        },
+        "delete": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Allow users to delete a movie from their list of favorites",
+          "description": "This endpoint makes a DELETE request to remove a movie from list of favorites.",
+          "parameters": [
+            {
+              "name": "Username",
+              "in": "path",
+              "description": "The username for which the movie needs to be deleted from list of favorites",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            },
+            {
+              "name": "MovieID",
+              "in": "path",
+              "description": "The id of the movie that needs to be deleted from list of favorites",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Movie removed successfuly",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "example": [
+                      {
+                        "id": "636b8c7fde57b3d74970ad03",
+                        "Username": "John01",
+                        "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+                        "Email": "john@gmail.com",
+                        "Birthday": "01/05/1992",
+                        "FavoriteMovies": []
+                      }
+                    ],
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Username": {
+                          "type": "string"
+                        },
+                        "Passoword": {
+                          "type": "string"
+                        },
+                        "Email": {
+                          "type": "string"
+                        },
+                        "Birthday": {
+                          "type": "string"
+                        },
+                        "FavoriteMovies": {
+                          "type": "array"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Username could not be found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      },
+      "/movies": {
+        "get": {
+          "tags": [
+            "Movies"
+          ],
+          "summary": "Get a list of all movies",
+          "description": "This endpoint uses a GET request to retrive all movies.",
+          "responses": {
+            "200": {
+              "description": "Succesful pull of all movies",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "id": "635932bcfb472953a30232d8",
+                      "Title": "The Terminal",
+                      "Description": "An Eastern European tourist unexpectedly finds himself stranded in JFK airport, and must take up temporary residence there.",
+                      "Genre": {
+                        "Name": "Drama",
+                        "Description": "Drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
+                      },
+                      "Director": {
+                        "Name": "Martin Scorsese",
+                        "Bio": "He was raised in the neighborhood of Little Italy, which later provided the inspiration for several of his films."
+                      }
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "Title": {
+                          "type": "string"
+                        },
+                        "Description": {
+                          "type": "string"
+                        },
+                        "Genre": {
+                          "type": "object",
+                          "properties": {
+                            "Name": {
+                              "type": "string"
+                            },
+                            "Description": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "Director": {
+                          "type": "object",
+                          "properties": {
+                            "Name": {
+                              "type": "string"
+                            },
+                            "Bio": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      },
+      "/movies/{Title}": {
+        "get": {
+          "tags": [
+            "Movies"
+          ],
+          "summary": "Get a movie by title",
+          "description": "This endpoint uses a GET request to retrive a single movie by title.",
+          "parameters": [
+            {
+              "name": "Title",
+              "in": "path",
+              "description": "The title of the movie that we want to get",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Succesful pull of the movie",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "id": "635932bcfb472953a30232d8",
+                      "Title": "The Terminal",
+                      "Description": "An Eastern European tourist unexpectedly finds himself stranded in JFK airport, and must take up temporary residence there.",
+                      "Genre": {
+                        "Name": "Drama",
+                        "Description": "Drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
+                      },
+                      "Director": {
+                        "Name": "Martin Scorsese",
+                        "Bio": "He was raised in the neighborhood of Little Italy, which later provided the inspiration for several of his films."
+                      }
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer",
+                          "format": "int64"
+                        },
+                        "Title": {
+                          "type": "string"
+                        },
+                        "Description": {
+                          "type": "string"
+                        },
+                        "Genre": {
+                          "type": "object",
+                          "properties": {
+                            "Name": {
+                              "type": "string"
+                            },
+                            "Description": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "Director": {
+                          "type": "object",
+                          "properties": {
+                            "Name": {
+                              "type": "string"
+                            },
+                            "Bio": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      },
+      "/movies/genres/{Name}": {
+        "get": {
+          "tags": [
+            "Movies"
+          ],
+          "summary": "Get specific genre information by genre name",
+          "description": "This endpoint uses a GET request to retrive a single genre.",
+          "parameters": [
+            {
+              "name": "Name",
+              "in": "path",
+              "description": "The name of the genre that we want to get",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Succesful pull of the genre information",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "Name": "Drama",
+                      "Description": "Drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "Description": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      },
+      "/movies/directors/{Name}": {
+        "get": {
+          "tags": [
+            "Movies"
+          ],
+          "summary": "Get specific director information by director name",
+          "description": "This endpoint uses a GET request to retrive a director.",
+          "parameters": [
+            {
+              "name": "Name",
+              "in": "path",
+              "description": "The name of the director that we want to get",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Succesful pull of the director information",
+              "content": {
+                "*/*": {
+                  "schema": {
+                    "type": "array",
+                    "example": {
+                      "Name": "Martin Scorsese",
+                      "Bio": "He was raised in the neighborhood of Little Italy, which later provided the inspiration for several of his films."
+                    },
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Name": {
+                          "type": "string"
+                        },
+                        "Bio": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          },
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ]
+        }
+      }
+    },
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      },
+      "schemas": {
+        "Users": {
+          "type": "object",
+          "properties": {
+            "Username": {
+              "type": "string"
+            },
+            "Passoword": {
+              "type": "string"
+            },
+            "Email": {
+              "type": "string"
+            },
+            "Birthday": {
+              "type": "string"
+            },
+            "FavoriteMovies": {
+              "type": "array"
+            }
+          }
+        },
+        "Movies": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "Title": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            },
+            "Genre": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Description": {
+                  "type": "string"
+                }
+              }
+            },
+            "Director": {
+              "type": "object",
+              "properties": {
+                "Name": {
+                  "type": "string"
+                },
+                "Bio": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "Genre": {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "type": "string"
+            },
+            "Description": {
+              "type": "string"
+            }
+          }
+        },
+        "Director": {
+          "type": "object",
+          "properties": {
+            "Name": {
+              "type": "string"
+            },
+            "Bio": {
+              "type": "string"
+            }
+          }
+        },
+        "MoviesList": {
+          "type": "array",
+          "example": {
+            "id": "635932bcfb472953a30232d8",
+            "Title": "The Terminal",
+            "Description": "An Eastern European tourist unexpectedly finds himself stranded in JFK airport, and must take up temporary residence there.",
+            "Genre": {
+              "Name": "Drama",
+              "Description": "Drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
+            },
+            "Director": {
+              "Name": "Martin Scorsese",
+              "Bio": "He was raised in the neighborhood of Little Italy, which later provided the inspiration for several of his films."
+            }
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int64"
+              },
+              "Title": {
+                "type": "string"
+              },
+              "Description": {
+                "type": "string"
+              },
+              "Genre": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Description": {
+                    "type": "string"
+                  }
+                }
+              },
+              "Director": {
+                "type": "object",
+                "properties": {
+                  "Name": {
+                    "type": "string"
+                  },
+                  "Bio": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "UsersList": {
+          "type": "array",
+          "example": {
+            "id": "636b8c7fde57b3d74970ad03",
+            "Username": "John01",
+            "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+            "Email": "john@gmail.com",
+            "Birthday": "01/05/1992",
+            "FavoriteMovies": []
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "Username": {
+                "type": "string"
+              },
+              "Passoword": {
+                "type": "string"
+              },
+              "Email": {
+                "type": "string"
+              },
+              "Birthday": {
+                "type": "string"
+              },
+              "FavoriteMovies": {
+                "type": "array"
+              }
+            }
+          }
+        },
+        "GetMoviesGenre": {
+          "type": "array",
+          "example": {
+            "Name": "Drama",
+            "Description": "Drama is a category or genre of narrative fiction (or semi-fiction) intended to be more serious than humorous in tone."
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string"
+              },
+              "Description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "GetMoviesDirector": {
+          "type": "array",
+          "example": {
+            "Name": "Martin Scorsese",
+            "Bio": "He was raised in the neighborhood of Little Italy, which later provided the inspiration for several of his films."
+          },
+          "items": {
+            "type": "object",
+            "properties": {
+              "Name": {
+                "type": "string"
+              },
+              "Bio": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "MovieAddedToFavorites": {
+          "type": "array",
+          "example": [
+            {
+              "id": "636b8c7fde57b3d74970ad03",
+              "Username": "John01",
+              "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+              "Email": "john@gmail.com",
+              "Birthday": "01/05/1992",
+              "FavoriteMovies": [
+                "635932bcfb472953a30232d8"
+              ]
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "Username": {
+                "type": "string"
+              },
+              "Passoword": {
+                "type": "string"
+              },
+              "Email": {
+                "type": "string"
+              },
+              "Birthday": {
+                "type": "string"
+              },
+              "FavoriteMovies": {
+                "type": "array"
+              }
+            }
+          }
+        },
+        "MovieDeletedFromFavorites": {
+          "type": "array",
+          "example": [
+            {
+              "id": "636b8c7fde57b3d74970ad03",
+              "Username": "John01",
+              "Password": "$2b$10$FlchLT2tGZcrmeT0yCLvIeO7OqFQpCHRVWHcYbJ6DUwaWWtg74fiq",
+              "Email": "john@gmail.com",
+              "Birthday": "01/05/1992",
+              "FavoriteMovies": []
+            }
+          ],
+          "items": {
+            "type": "object",
+            "properties": {
+              "Username": {
+                "type": "string"
+              },
+              "Passoword": {
+                "type": "string"
+              },
+              "Email": {
+                "type": "string"
+              },
+              "Birthday": {
+                "type": "string"
+              },
+              "FavoriteMovies": {
+                "type": "array"
+              }
+            }
+          }
+        }
+      }
+    }
+  }

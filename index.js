@@ -24,6 +24,16 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+//Require and incorporate swagger openAPI documentation
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json');
+app.use(
+    '/documentation',
+    swaggerUi.serve, 
+    swaggerUi.setup(swaggerDocument)
+  );
+
 const cors = require('cors');
 app.use(cors());
 

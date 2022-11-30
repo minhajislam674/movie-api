@@ -7,7 +7,7 @@
     },
     "servers": [
       {
-        "url": "https://api-thisismyflix.herokuapp.com/"
+        "url": "https://myflix-movies.onrender.com"
       }
     ],
     "tags": [

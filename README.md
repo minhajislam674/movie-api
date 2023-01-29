@@ -1,8 +1,10 @@
-# MyFlix Movie API
+# OscarFlicks - API
 
-## What it's about
+> This web application implements a RESTful API to perform CRUD operations on different Academy Award winning films, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.
 
-This web application will provide users with access to information about different movies, directors, and genres. Users will be able to sign up, update their personal information, and create a list of their favorite movies.
+API Endpoints: https://myflix-movies.onrender.com/documentation/
+
+Frontend live demo: https://myflix-movies.onrender.com/documentation/
 
 ## Key Features
 
@@ -16,14 +18,20 @@ This web application will provide users with access to information about differe
 - Allow users to remove a movie from their list of favorites
 - Allow existing users to deregister
 
-## Links
-
-**API Documentation:** https://api-thisismyflix.herokuapp.com/documentation/
-**API:** https://api-thisismyflix.herokuapp.com/
-
 ## Built with
 
 - Node.js
 - Express
 - Mongoose
 - MongoDB
+
+## Dependencies
+
+- bcrypt
+- body-parser
+- cors
+- express
+- express-validator
+- jsonwebtoken
+- mongoose
+- passport

@@ -1,5 +1,6 @@
+//two Passport strategies are defined: LocalStrategy and JWTStrategy 
 const passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy, //two Passport strategies are defined: LocalStrategy and JWTStrategy 
+    LocalStrategy = require('passport-local').Strategy, 
     Models = require('./models.js'),
     passportJWT = require('passport-jwt');
 
